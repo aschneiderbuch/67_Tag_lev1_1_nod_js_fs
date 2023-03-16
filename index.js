@@ -107,3 +107,60 @@ fs.access("./assets/" ,fs.constants.F_OK , (err)=>{
 })
 
 
+fs.mkdir("./delete",  (err)=>{
+    if(err){
+        console.log("Erroer bei fs.mkdir   delete.txt --> " , err)
+    }
+    else{
+        console.log("fs.mkdir   delete.txt erstellen hat geklappt")
+    }
+})
+
+
+fs.access(("./delete/"), constants.F_OK, (err)=>{
+    if(err){
+        console.log("fs.access Error   delete.txt --> " , err)
+    }
+    else{
+        console.log("fs.access  existiert , also löschen  ")
+        fs.rmdir(("./delete/"), (err)=>{
+            if(err){
+                console.log(("Error --> problem beim löschen"))
+            }
+            else {
+                console.log("Löschen von delete.txt hat geklappt")
+            }
+        })
+    }
+})
+
+
+fs.writeFile(("./delete.txt"), ("input in Datei :-)") , (err)=>{
+    if(err){
+        console.log("Error fs.writeFile  --> ", err)
+
+    }
+    else{
+        console.log("fs.writeFile   erstellen von delete.txt hat geklappt")
+    }
+})
+
+fs.access(("./delete.txt"), constants.F_OK, (err)=>{
+    if(err){
+        console.log("Error delete.txt ist nicht vorhanden")
+    }
+    else{
+        console.log("delete.txt ist vorhanden und soll gelöscht werden")
+
+        fs.rm(("./delete.txt"), (err)=>{
+            if(err){
+                console.log("Error , löschen von delete.txt ist fehlgeschlagen")
+            }
+            else{
+                console.log("löschen von delete.txt hat funktioniert")
+            }
+        })
+    }
+})
+
+
