@@ -1,4 +1,5 @@
-import fs, { copyFileSync } from "fs"
+import { constants } from "buffer"
+import fs, { copyFileSync, stat, Stats } from "fs"
 
 // in blog1.txt steht bereits "Hello World"
 fs.open("./blog1.txt",  /* "a+", */ (err)=>{
@@ -45,20 +46,22 @@ fs.mkdir("./assets/", (err) => {
 // wenn ja,   dann löschen 
 fs.mkdir("./assets/", (err) =>{
     if(err){
-        fs.rmdir("./assets/" , (err) => {
+       /*  fs.rmdir("./assets/" , (err) => {
             if(err){
                 console.log("Error im fs.rm --> " , err)
             }
             else{
                 console.log("fs.rmdir löschen hat geklappt")
             }
-        })
+        }) */
     }
     else{
         console.log("fs.mkdir ist zu Ende")
     }
 } )
 
+
+// prüft ob es Ordner oder Datei schon gibt
 if(fs.existsSync("./assets/")){
     console.log("Ordner assets ist schon vorhanden")
 }
@@ -72,4 +75,35 @@ if(fs.existsSync("./blog1.txt")){
 else{
     console.log("nein gibt noch nicht blog1.txt")
 }
+
+
+
+fs.stat("./assets/" , (err)=>{
+    if(err) {
+        console.log("Error fs.stat assets schon vorhanden --> " , err )
+    }
+    else{
+        console.log("Alles gut bie fs.stat -assets noch nicht vorhanden --> " )
+  
+    }
+})
+
+
+fs.access("./assets/" ,fs.constants.F_OK , (err)=>{
+    if(err) {
+        console.log("Error fs.access --> " , err)
+    }
+    else {
+        console.log("fs.access hat geklappt F_OK")
+        fs.rmdir("./assets/" , (err) => {
+            if(err){
+                console.log("Error im fs.rm --> " , err)
+            }
+            else{
+                console.log("fs.rmdir löschen hat geklappt")
+            }
+        })
+    }
+})
+
 
